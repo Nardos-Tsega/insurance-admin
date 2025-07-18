@@ -1,9 +1,10 @@
-// components/CompleteAdminPanel.tsx
-import React, { useState } from 'react';
+// components/CompleteAdminPanel.tsx - Section 1: Imports and Types
+import InsuranceManagement from './InsuranceManagement';
+import React, { JSX, useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
-// import { usePermissions, PermissionGate, RoleGate, useUserActions } from '../hooks/usePermissions';
 import { usePermissions, useUserActions } from '../hooks/usePermissions';
 import { PermissionGate, RoleGate } from '../components/PermissionComponents';
+import ClaimsManagement from './ClaimsManagement';
 import { 
   Users, 
   Building2, 
@@ -21,7 +22,17 @@ import {
   Eye,
   Database,
   LogOut,
-  AlertCircle
+  AlertCircle,
+  FileText,
+  CheckCircle,
+  XCircle,
+  Clock,
+  DollarSign,
+  TrendingUp,
+  Activity,
+  Car,
+  Heart,
+  Activity as HealthIcon
 } from 'lucide-react';
 
 // Define types for better TypeScript support
@@ -49,6 +60,7 @@ interface NavigationItem {
   show: boolean;
 }
 
+// Section 2: Component Declaration and State
 const CompleteAdminPanel: React.FC = () => {
   const { user, logout } = useAuth();
   const { userRole, canManageRole } = usePermissions();
@@ -86,9 +98,12 @@ const CompleteAdminPanel: React.FC = () => {
     return u.id === user?.id; // Users can only see themselves
   });
 
+  // Section 3: Helper Functions
   const getNavigationItems = (): NavigationItem[] => {
     const items: NavigationItem[] = [
       { id: 'dashboard', label: 'Dashboard', icon: Database, show: true },
+      { id: 'claims', label: 'Claims', icon: FileText, show: true },
+      { id: 'insurance', label: 'Insurance', icon: Shield, show: true },
       { id: 'users', label: 'Users', icon: Users, show: canViewUsers() },
       { id: 'companies', label: 'Companies', icon: Building2, show: canViewCompanies() },
       { id: 'super-admins', label: 'Super Admins', icon: Crown, show: canManageSuperAdmins() },
@@ -133,6 +148,7 @@ const CompleteAdminPanel: React.FC = () => {
     setShowDeleteModal(false);
   };
 
+  // Section 4: Sidebar Component
   const Sidebar: React.FC = () => (
     <div className={`${sidebarOpen ? 'w-64' : 'w-16'} bg-white border-r border-gray-200 transition-all duration-300 h-screen flex flex-col`}>
       <div className="p-4">
@@ -192,6 +208,7 @@ const CompleteAdminPanel: React.FC = () => {
     </div>
   );
 
+  // Section 5: Header Component
   const Header: React.FC = () => (
     <header className="bg-white border-b border-gray-200 px-6 py-4">
       <div className="flex items-center justify-between">
@@ -209,7 +226,11 @@ const CompleteAdminPanel: React.FC = () => {
           
           <div>
             <h1 className="text-2xl font-semibold text-gray-800 capitalize">
-              {activeTab.replace('-', ' ')}
+              {activeTab === 'claims' ? 'Claims Management' : 
+               activeTab === 'super-admins' ? 'Super Admins' : 
+               activeTab === 'system-settings' ? 'System Settings' : 
+               activeTab === 'audit-logs' ? 'Audit Logs' : 
+               activeTab.replace('-', ' ')}
             </h1>
             <div className="flex items-center gap-2 text-sm text-gray-500">
               {getRoleIcon(user?.role || '')}
@@ -235,6 +256,174 @@ const CompleteAdminPanel: React.FC = () => {
         </div>
       </div>
     </header>
+  );
+
+  // Section 6: Dashboard Component
+  const Dashboard: React.FC = () => (
+    <div className="p-6 space-y-6">
+      {/* Enhanced Stats Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm text-gray-600">Insurance Applications</p>
+              <p className="text-2xl font-semibold text-gray-900">234</p>
+              <p className="text-sm text-green-600 flex items-center gap-1">
+                <TrendingUp className="h-3 w-3" />
+                +12% from last month
+              </p>
+            </div>
+            <Shield className="h-8 w-8 text-blue-500" />
+          </div>
+        </div>
+        
+        <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm text-gray-600">Pending Review</p>
+              <p className="text-2xl font-semibold text-gray-900">56</p>
+              <p className="text-sm text-orange-600 flex items-center gap-1">
+                <Clock className="h-3 w-3" />
+                Needs attention
+              </p>
+            </div>
+            <Eye className="h-8 w-8 text-orange-500" />
+          </div>
+        </div>
+
+        <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm text-gray-600">Approved Today</p>
+              <p className="text-2xl font-semibold text-gray-900">23</p>
+              <p className="text-sm text-green-600 flex items-center gap-1">
+                <CheckCircle className="h-3 w-3" />
+                $45,600 total
+              </p>
+            </div>
+            <CheckCircle className="h-8 w-8 text-green-500" />
+          </div>
+        </div>
+
+        <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm text-gray-600">Premium Revenue</p>
+              <p className="text-2xl font-semibold text-gray-900">$156,780</p>
+              <p className="text-sm text-blue-600 flex items-center gap-1">
+                <Activity className="h-3 w-3" />
+                This month
+              </p>
+            </div>
+            <DollarSign className="h-8 w-8 text-purple-500" />
+          </div>
+        </div>
+      </div>
+      {/* Claims Quick Access */}
+      <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+        <h3 className="text-lg font-semibold text-gray-900 mb-4">Quick Actions</h3>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <button 
+            onClick={() => setActiveTab('claims')}
+            className="p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors text-left"
+          >
+            <div className="flex items-center gap-3">
+              <FileText className="h-8 w-8 text-blue-500" />
+              <div>
+                <div className="font-medium text-gray-900">Manage Claims</div>
+                <div className="text-sm text-gray-500">View and process claims</div>
+              </div>
+            </div>
+          </button>
+          
+          <button 
+            onClick={() => setActiveTab('claims')}
+            className="p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors text-left"
+          >
+            <div className="flex items-center gap-3">
+              <Eye className="h-8 w-8 text-orange-500" />
+              <div>
+                <div className="font-medium text-gray-900">Pending Reviews</div>
+                <div className="text-sm text-gray-500">56 claims need attention</div>
+              </div>
+            </div>
+          </button>
+          
+          <button className="p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors text-left">
+            <div className="flex items-center gap-3">
+              <Database className="h-8 w-8 text-purple-500" />
+              <div>
+                <div className="font-medium text-gray-900">AI Analytics</div>
+                <div className="text-sm text-gray-500">View AI performance</div>
+              </div>
+            </div>
+          </button>
+        </div>
+      </div>
+
+      {/* Recent Activity */}
+      <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+        <h3 className="text-lg font-semibold text-gray-900 mb-4">Recent Activity</h3>
+        <div className="space-y-3">
+          <div className="flex items-center gap-3 text-sm">
+            <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
+              <CheckCircle className="h-4 w-4 text-green-600" />
+            </div>
+            <div className="flex-1">
+              <div className="text-gray-900">Claim CLM-2024-001 approved</div>
+              <div className="text-gray-500">$2,500 • 2 minutes ago</div>
+            </div>
+          </div>
+          <div className="flex items-center gap-3 text-sm">
+            <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
+              <Database className="h-4 w-4 text-blue-600" />
+            </div>
+            <div className="flex-1">
+              <div className="text-gray-900">AI analysis completed</div>
+              <div className="text-gray-500">CLM-2024-002 • 15 minutes ago</div>
+            </div>
+          </div>
+          <div className="flex items-center gap-3 text-sm">
+            <div className="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center">
+              <XCircle className="h-4 w-4 text-red-600" />
+            </div>
+            <div className="flex-1">
+              <div className="text-gray-900">Claim CLM-2024-003 rejected</div>
+              <div className="text-gray-500">Insufficient evidence • 1 hour ago</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
+  // Section 7: Table Components
+  const TableControls: React.FC<{ entityType: string }> = ({ entityType }) => (
+    <div className="flex items-center justify-between mb-6">
+      <div className="flex items-center gap-3">
+        <PermissionGate permission={`write_${entityType.toLowerCase()}s` as any}>
+          <button className="bg-emerald-500 text-white px-4 py-2 rounded-lg hover:bg-emerald-600 transition-colors flex items-center gap-2">
+            <Plus size={16} />
+            Add {entityType}
+          </button>
+        </PermissionGate>
+        
+        <button className="border border-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-50 transition-colors flex items-center gap-2">
+          <Filter size={16} />
+          Filter
+        </button>
+      </div>
+      
+      <div className="flex items-center gap-2 text-sm text-gray-600">
+        <span>Show</span>
+        <select className="border border-gray-300 rounded px-2 py-1">
+          <option>10</option>
+          <option>25</option>
+          <option>50</option>
+        </select>
+        <span>per page</span>
+      </div>
+    </div>
   );
 
   const UsersTable: React.FC = () => (
@@ -370,34 +559,6 @@ const CompleteAdminPanel: React.FC = () => {
     </div>
   );
 
-  const TableControls: React.FC<{ entityType: string }> = ({ entityType }) => (
-    <div className="flex items-center justify-between mb-6">
-      <div className="flex items-center gap-3">
-        <PermissionGate permission={`write_${entityType.toLowerCase()}s` as any}>
-          <button className="bg-emerald-500 text-white px-4 py-2 rounded-lg hover:bg-emerald-600 transition-colors flex items-center gap-2">
-            <Plus size={16} />
-            Add {entityType}
-          </button>
-        </PermissionGate>
-        
-        <button className="border border-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-50 transition-colors flex items-center gap-2">
-          <Filter size={16} />
-          Filter
-        </button>
-      </div>
-      
-      <div className="flex items-center gap-2 text-sm text-gray-600">
-        <span>Show</span>
-        <select className="border border-gray-300 rounded px-2 py-1">
-          <option>10</option>
-          <option>25</option>
-          <option>50</option>
-        </select>
-        <span>per page</span>
-      </div>
-    </div>
-  );
-
   const CompaniesTable: React.FC = () => (
     <div className="bg-white rounded-lg shadow-sm border border-gray-200">
       <div className="overflow-x-auto">
@@ -458,6 +619,7 @@ const CompleteAdminPanel: React.FC = () => {
     </div>
   );
 
+  // Section 8: Modal Components
   const DeleteModal: React.FC = () => (
     showDeleteModal ? (
       <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
@@ -491,116 +653,106 @@ const CompleteAdminPanel: React.FC = () => {
     ) : null
   );
 
-  const Dashboard: React.FC = () => (
-    <div className="space-y-6">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm text-gray-600">Total Users</p>
-              <p className="text-2xl font-semibold text-gray-900">{visibleUsers.length}</p>
-            </div>
-            <Users className="h-8 w-8 text-emerald-500" />
-          </div>
-        </div>
-        
-        <PermissionGate permission="read_companies">
-          <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm text-gray-600">Total Companies</p>
-                <p className="text-2xl font-semibold text-gray-900">{companies.length}</p>
-              </div>
-              <Building2 className="h-8 w-8 text-emerald-500" />
-            </div>
-          </div>
-        </PermissionGate>
-
-        <RoleGate role="super_admin">
-          <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm text-gray-600">System Status</p>
-                <p className="text-2xl font-semibold text-emerald-600">Online</p>
-              </div>
-              <Database className="h-8 w-8 text-emerald-500" />
-            </div>
-          </div>
-        </RoleGate>
-      </div>
-
-      {/* Recent Activity */}
-      <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">Recent Activity</h3>
-        <div className="space-y-3">
-          <div className="flex items-center gap-3 text-sm">
-            <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
-            <span className="text-gray-600">New user registered: Jane Smith</span>
-            <span className="text-gray-400">2 hours ago</span>
-          </div>
-          <div className="flex items-center gap-3 text-sm">
-            <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-            <span className="text-gray-600">Company updated: Acme Corp</span>
-            <span className="text-gray-400">4 hours ago</span>
-          </div>
-          <div className="flex items-center gap-3 text-sm">
-            <div className="w-2 h-2 bg-yellow-500 rounded-full"></div>
-            <span className="text-gray-600">System maintenance scheduled</span>
-            <span className="text-gray-400">1 day ago</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-
+  // Section 9: Render Content Function
   const renderContent = (): JSX.Element => {
     switch (activeTab) {
+      case 'claims':
+        return (
+          <RoleGate roles={['admin', 'super_admin']}>
+            <ClaimsManagement />
+          </RoleGate>
+        );
+      case 'insurance':
+        return <InsuranceManagement />;
       case 'users':
         return (
-          <>
+          <div className="p-6">
             <TableControls entityType="User" />
             <UsersTable />
-          </>
+          </div>
         );
       case 'companies':
         return (
           <RoleGate roles={['admin', 'super_admin']}>
-            <TableControls entityType="Company" />
-            <CompaniesTable />
+            <div className="p-6">
+              <TableControls entityType="Company" />
+              <CompaniesTable />
+            </div>
           </RoleGate>
         );
       case 'super-admins':
         return (
           <RoleGate role="super_admin">
-            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">Super Admin Management</h3>
-              <p className="text-gray-600">Super admin management interface would go here.</p>
+            <div className="p-6">
+              <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                <h3 className="text-lg font-semibold text-gray-900 mb-4">Super Admin Management</h3>
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                    <div>
+                      <h4 className="font-medium text-gray-900">Manage Super Admins</h4>
+                      <p className="text-sm text-gray-600">Add, edit, or remove super administrator accounts</p>
+                    </div>
+                    <button className="bg-emerald-500 text-white px-4 py-2 rounded-lg hover:bg-emerald-600 transition-colors">
+                      Manage
+                    </button>
+                  </div>
+                  <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                    <div>
+                      <h4 className="font-medium text-gray-900">Permission Templates</h4>
+                      <p className="text-sm text-gray-600">Create and manage permission templates</p>
+                    </div>
+                    <button className="bg-emerald-500 text-white px-4 py-2 rounded-lg hover:bg-emerald-600 transition-colors">
+                      Configure
+                    </button>
+                  </div>
+                </div>
+              </div>
             </div>
           </RoleGate>
         );
       case 'system-settings':
         return (
           <RoleGate role="super_admin">
-            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">System Settings</h3>
-              <div className="space-y-4">
-                <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-                  <div>
-                    <h4 className="font-medium text-gray-900">Maintenance Mode</h4>
-                    <p className="text-sm text-gray-600">Enable maintenance mode for system updates</p>
+            <div className="p-6">
+              <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                <h3 className="text-lg font-semibold text-gray-900 mb-4">System Settings</h3>
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                    <div>
+                      <h4 className="font-medium text-gray-900">AI Analysis Settings</h4>
+                      <p className="text-sm text-gray-600">Configure AI analysis parameters and thresholds</p>
+                    </div>
+                    <button className="bg-emerald-500 text-white px-4 py-2 rounded-lg hover:bg-emerald-600 transition-colors">
+                      Configure
+                    </button>
                   </div>
-                  <button className="bg-emerald-500 text-white px-4 py-2 rounded-lg hover:bg-emerald-600 transition-colors">
-                    Configure
-                  </button>
-                </div>
-                <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-                  <div>
-                    <h4 className="font-medium text-gray-900">Backup Settings</h4>
-                    <p className="text-sm text-gray-600">Configure automated backups</p>
+                  <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                    <div>
+                      <h4 className="font-medium text-gray-900">Notification Settings</h4>
+                      <p className="text-sm text-gray-600">Manage notification preferences and mobile alerts</p>
+                    </div>
+                    <button className="bg-emerald-500 text-white px-4 py-2 rounded-lg hover:bg-emerald-600 transition-colors">
+                      Configure
+                    </button>
                   </div>
-                  <button className="bg-emerald-500 text-white px-4 py-2 rounded-lg hover:bg-emerald-600 transition-colors">
-                    Configure
-                  </button>
+                  <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                    <div>
+                      <h4 className="font-medium text-gray-900">Backup Settings</h4>
+                      <p className="text-sm text-gray-600">Configure automated backups and data retention</p>
+                    </div>
+                    <button className="bg-emerald-500 text-white px-4 py-2 rounded-lg hover:bg-emerald-600 transition-colors">
+                      Configure
+                    </button>
+                  </div>
+                  <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                    <div>
+                      <h4 className="font-medium text-gray-900">Security Settings</h4>
+                      <p className="text-sm text-gray-600">Manage security policies and access controls</p>
+                    </div>
+                    <button className="bg-emerald-500 text-white px-4 py-2 rounded-lg hover:bg-emerald-600 transition-colors">
+                      Configure
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -609,9 +761,68 @@ const CompleteAdminPanel: React.FC = () => {
       case 'audit-logs':
         return (
           <PermissionGate permission="read_audit_logs">
-            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">Audit Logs</h3>
-              <p className="text-gray-600">Audit logs interface would go here.</p>
+            <div className="p-6">
+              <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                <h3 className="text-lg font-semibold text-gray-900 mb-4">Audit Logs</h3>
+                <div className="space-y-3">
+                  <div className="flex items-center gap-3 text-sm border-b border-gray-100 pb-3">
+                    <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
+                      <Eye className="h-4 w-4 text-blue-600" />
+                    </div>
+                    <div className="flex-1">
+                      <div className="text-gray-900">Admin viewed claim CLM-2024-001</div>
+                      <div className="text-gray-500">User: {user?.full_name} • 2024-01-15 10:30:00</div>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3 text-sm border-b border-gray-100 pb-3">
+                    <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
+                      <CheckCircle className="h-4 w-4 text-green-600" />
+                    </div>
+                    <div className="flex-1">
+                      <div className="text-gray-900">Claim CLM-2024-001 approved</div>
+                      <div className="text-gray-500">User: {user?.full_name} • 2024-01-15 10:25:00</div>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3 text-sm border-b border-gray-100 pb-3">
+                    <div className="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center">
+                      <Database className="h-4 w-4 text-purple-600" />
+                    </div>
+                    <div className="flex-1">
+                      <div className="text-gray-900">AI analysis triggered</div>
+                      <div className="text-gray-500">System • 2024-01-15 10:20:00</div>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3 text-sm border-b border-gray-100 pb-3">
+                    <div className="w-8 h-8 bg-yellow-100 rounded-full flex items-center justify-center">
+                      <Users className="h-4 w-4 text-yellow-600" />
+                    </div>
+                    <div className="flex-1">
+                      <div className="text-gray-900">New user registration</div>
+                      <div className="text-gray-500">System • 2024-01-15 09:45:00</div>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3 text-sm">
+                    <div className="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center">
+                      <XCircle className="h-4 w-4 text-red-600" />
+                    </div>
+                    <div className="flex-1">
+                      <div className="text-gray-900">Failed login attempt</div>
+                      <div className="text-gray-500">IP: 192.168.1.1 • 2024-01-15 09:30:00</div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="mt-6 flex items-center justify-between">
+                  <button className="border border-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-50 transition-colors flex items-center gap-2">
+                    <Filter size={16} />
+                    Filter Logs
+                  </button>
+                  <button className="bg-emerald-500 text-white px-4 py-2 rounded-lg hover:bg-emerald-600 transition-colors flex items-center gap-2">
+                    <DollarSign size={16} />
+                    Export Logs
+                  </button>
+                </div>
+              </div>
             </div>
           </PermissionGate>
         );
@@ -620,6 +831,7 @@ const CompleteAdminPanel: React.FC = () => {
     }
   };
 
+  // Section 10: Main Return Statement & Export
   return (
     <div className="flex h-screen bg-gray-50">
       <Sidebar />
@@ -627,7 +839,7 @@ const CompleteAdminPanel: React.FC = () => {
       <div className="flex-1 flex flex-col overflow-hidden">
         <Header />
         
-        <main className="flex-1 overflow-auto p-6">
+        <main className="flex-1 overflow-auto">
           {renderContent()}
         </main>
       </div>
