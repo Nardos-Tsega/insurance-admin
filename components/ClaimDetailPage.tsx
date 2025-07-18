@@ -538,13 +538,13 @@ const runDamageAnnotation = async () => {
 
   const getStatusIcon = (status: string): React.ReactElement => {
     const icons = {
-      pending: <Clock className="h-5 w-5" />,
-      under_review: <Eye className="h-5 w-5" />,
-      approved: <CheckCircle className="h-5 w-5" />,
-      rejected: <XCircle className="h-5 w-5" />,
-      completed: <Shield className="h-5 w-5" />
+      pending: <Clock className="h-4 w-4" />,
+      under_review: <Eye className="h-4 w-4" />,
+      approved: <CheckCircle className="h-4 w-4" />,
+      rejected: <XCircle className="h-4 w-4" />,
+      completed: <Shield className="h-4 w-4" />
     };
-    return icons[status as keyof typeof icons] || <AlertCircle className="h-5 w-5" />;
+    return icons[status as keyof typeof icons] || <AlertCircle className="h-4 w-4" />;
   };
 
   const formatDate = (dateString: string): string => {
@@ -651,18 +651,18 @@ const renderDamageAnalysisResults = () => {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       {/* Overall Assessment */}
-      <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg p-6 border">
-        <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
-          <BarChart3 className="h-6 w-6 text-blue-600" />
+      <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg p-4 border">
+        <h3 className="text-lg font-bold text-gray-900 mb-2 flex items-center gap-1">
+          <BarChart3 className="h-4 w-4 text-blue-600" />
           Overall Vehicle Damage Assessment
         </h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="space-y-3">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="space-y-2">
             <div className="flex items-center justify-between">
-              <span className="text-sm font-medium text-gray-600">Overall Damage:</span>
-              <span className={`px-3 py-1 rounded-full text-sm font-bold ${
+              <span className="text-xs font-medium text-gray-600">Overall Damage:</span>
+              <span className={`px-2 py-0.5 rounded-full text-xs font-bold ${
                 aggregated_damage_report.overall_vehicle_damage_assessment.overall_damage_level === 'High' 
                   ? 'bg-red-100 text-red-800' 
                   : aggregated_damage_report.overall_vehicle_damage_assessment.overall_damage_level === 'Medium' 
@@ -673,37 +673,37 @@ const renderDamageAnalysisResults = () => {
               </span>
             </div>
             <div className="flex items-center justify-between">
-              <span className="text-sm font-medium text-gray-600">Estimated Cost:</span>
-              <span className="text-lg font-bold text-green-600">
+              <span className="text-xs font-medium text-gray-600">Estimated Cost:</span>
+              <span className="text-base font-bold text-green-600">
                 ${damage_assessment_cost.cost_details.total_estimated_cost.toLocaleString()}
               </span>
             </div>
           </div>
-          <div className="text-sm text-gray-600">
+          <div className="text-xs text-gray-600">
             <p>{aggregated_damage_report.overall_vehicle_damage_assessment.explanation}</p>
           </div>
         </div>
       </div>
 
       {/* Side Damage Reports */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
         {Object.entries(side_damage_reports).map(([side, report]) => {
           // Normalize the damaged_parts array
           const normalizedParts = normalizeDamagedParts(report.damaged_parts || []);
           
           return (
-            <div key={side} className="bg-white rounded-lg border p-4">
-              <h4 className="font-semibold text-gray-900 mb-3 capitalize flex items-center gap-2">
-                <Car className="h-4 w-4" />
+            <div key={side} className="bg-white rounded-lg border p-3">
+              <h4 className="font-semibold text-gray-900 mb-2 capitalize flex items-center gap-1">
+                <Car className="h-3 w-3" />
                 {side} Side ({report.overall_damage_percentage || 0}%)
               </h4>
-              <div className="space-y-2">
+              <div className="space-y-1">
                 {normalizedParts
                   .filter(part => part.damage_percentage > 0)
                   .map((part, index) => (
-                    <div key={index} className="flex items-center justify-between text-sm">
+                    <div key={index} className="flex items-center justify-between text-xs">
                       <span className="text-gray-600 capitalize">{part.car_part.replace('_', ' ')}</span>
-                      <span className={`px-2 py-1 rounded text-xs font-medium ${
+                      <span className={`px-1 py-0.5 rounded text-xs font-medium ${
                         part.damage_level === 'High' ? 'bg-red-100 text-red-800' :
                         part.damage_level === 'Medium' ? 'bg-yellow-100 text-yellow-800' :
                         'bg-green-100 text-green-800'
@@ -713,7 +713,7 @@ const renderDamageAnalysisResults = () => {
                     </div>
                   ))}
                 {normalizedParts.filter(part => part.damage_percentage > 0).length === 0 && (
-                  <div className="text-sm text-gray-500 italic">No damage detected on this side</div>
+                  <div className="text-xs text-gray-500 italic">No damage detected on this side</div>
                 )}
               </div>
             </div>
@@ -722,37 +722,37 @@ const renderDamageAnalysisResults = () => {
       </div>
 
       {/* Top Damages */}
-      <div className="bg-white rounded-lg border p-6">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-          <TrendingUp className="h-5 w-5 text-red-600" />
+      <div className="bg-white rounded-lg border p-4">
+        <h3 className="text-base font-semibold text-gray-900 mb-2 flex items-center gap-1">
+          <TrendingUp className="h-4 w-4 text-red-600" />
           Top External Damages
         </h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           {aggregated_damage_report.top_external_damages?.map((damage, index) => (
-            <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+            <div key={index} className="flex items-center justify-between p-2 bg-gray-50 rounded-lg">
               <span className="font-medium text-gray-900 capitalize">{damage.car_part.replace('_', ' ')}</span>
-              <span className="text-lg font-bold text-red-600">{damage.damage_percentage}</span>
+              <span className="text-base font-bold text-red-600">{damage.damage_percentage}</span>
             </div>
-          )) || <div className="text-gray-500">No top damages available</div>}
+          )) || <div className="text-gray-500 text-xs">No top damages available</div>}
         </div>
       </div>
 
       {/* Internal Damage Recommendations */}
-      <div className="bg-white rounded-lg border p-6">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-          <Wrench className="h-5 w-5 text-orange-600" />
+      <div className="bg-white rounded-lg border p-4">
+        <h3 className="text-base font-semibold text-gray-900 mb-2 flex items-center gap-1">
+          <Wrench className="h-4 w-4 text-orange-600" />
           Internal Damage Recommendations
         </h3>
-        <div className="space-y-4">
+        <div className="space-y-3">
           {/* Engine Bay */}
           {aggregated_damage_report.internal_damage_recommendations?.engine_bay_components?.length > 0 && (
             <div>
-              <h4 className="font-medium text-gray-800 mb-2">Engine Bay Components</h4>
-              <div className="space-y-2">
+              <h4 className="font-medium text-gray-800 mb-1">Engine Bay Components</h4>
+              <div className="space-y-1">
                 {aggregated_damage_report.internal_damage_recommendations.engine_bay_components.map((rec, index) => (
-                  <div key={index} className="bg-orange-50 p-3 rounded-lg">
-                    <div className="font-medium text-orange-900">{rec.recommended_part}</div>
-                    <div className="text-sm text-orange-700">{rec.reasoning}</div>
+                  <div key={index} className="bg-orange-50 p-2 rounded-lg">
+                    <div className="font-medium text-orange-900 text-sm">{rec.recommended_part}</div>
+                    <div className="text-xs text-orange-700">{rec.reasoning}</div>
                   </div>
                 ))}
               </div>
@@ -762,12 +762,12 @@ const renderDamageAnalysisResults = () => {
           {/* Chassis & Suspension */}
           {aggregated_damage_report.internal_damage_recommendations?.chassis_and_suspension?.length > 0 && (
             <div>
-              <h4 className="font-medium text-gray-800 mb-2">Chassis & Suspension</h4>
-              <div className="space-y-2">
+              <h4 className="font-medium text-gray-800 mb-1">Chassis & Suspension</h4>
+              <div className="space-y-1">
                 {aggregated_damage_report.internal_damage_recommendations.chassis_and_suspension.map((rec, index) => (
-                  <div key={index} className="bg-blue-50 p-3 rounded-lg">
-                    <div className="font-medium text-blue-900">{rec.recommended_part}</div>
-                    <div className="text-sm text-blue-700">{rec.reasoning}</div>
+                  <div key={index} className="bg-blue-50 p-2 rounded-lg">
+                    <div className="font-medium text-blue-900 text-sm">{rec.recommended_part}</div>
+                    <div className="text-xs text-blue-700">{rec.reasoning}</div>
                   </div>
                 ))}
               </div>
@@ -777,12 +777,12 @@ const renderDamageAnalysisResults = () => {
           {/* Electrical Systems */}
           {aggregated_damage_report.internal_damage_recommendations?.electrical_systems?.length > 0 && (
             <div>
-              <h4 className="font-medium text-gray-800 mb-2">Electrical Systems</h4>
-              <div className="space-y-2">
+              <h4 className="font-medium text-gray-800 mb-1">Electrical Systems</h4>
+              <div className="space-y-1">
                 {aggregated_damage_report.internal_damage_recommendations.electrical_systems.map((rec, index) => (
-                  <div key={index} className="bg-purple-50 p-3 rounded-lg">
-                    <div className="font-medium text-purple-900">{rec.recommended_part}</div>
-                    <div className="text-sm text-purple-700">{rec.reasoning}</div>
+                  <div key={index} className="bg-purple-50 p-2 rounded-lg">
+                    <div className="font-medium text-purple-900 text-sm">{rec.recommended_part}</div>
+                    <div className="text-xs text-purple-700">{rec.reasoning}</div>
                   </div>
                 ))}
               </div>
@@ -790,8 +790,8 @@ const renderDamageAnalysisResults = () => {
           )}
 
           {aggregated_damage_report.internal_damage_recommendations?.disclaimer && (
-            <div className="bg-gray-100 p-3 rounded-lg">
-              <p className="text-sm text-gray-600">
+            <div className="bg-gray-100 p-2 rounded-lg">
+              <p className="text-xs text-gray-600">
                 <strong>Disclaimer:</strong> {aggregated_damage_report.internal_damage_recommendations.disclaimer}
               </p>
             </div>
@@ -800,35 +800,35 @@ const renderDamageAnalysisResults = () => {
       </div>
 
       {/* Cost Breakdown */}
-      <div className="bg-white rounded-lg border p-6">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-          <DollarSign className="h-5 w-5 text-green-600" />
+      <div className="bg-white rounded-lg border p-4">
+        <h3 className="text-base font-semibold text-gray-900 mb-2 flex items-center gap-1">
+          <DollarSign className="h-4 w-4 text-green-600" />
           Cost Breakdown
         </h3>
-        <div className="space-y-3">
+        <div className="space-y-2">
           {damage_assessment_cost.cost_details.detailed_breakdown?.map((item, index) => (
-            <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+            <div key={index} className="flex items-center justify-between p-2 bg-gray-50 rounded-lg">
               <div className="flex-1">
-                <div className="font-medium text-gray-900 capitalize">{item.part.replace('_', ' ')}</div>
-                <div className="text-sm text-gray-600">
+                <div className="font-medium text-gray-900 text-sm capitalize">{item.part.replace('_', ' ')}</div>
+                <div className="text-xs text-gray-600">
                   {item.damage_type} - {item.damage_percentage} ({item.vehicle_side} side)
                 </div>
               </div>
               <div className="text-right">
-                <div className="font-semibold text-gray-900">${item.calculated_cost}</div>
-                <div className="text-sm text-gray-500">Base: ${item.base_cost}</div>
+                <div className="font-semibold text-gray-900 text-sm">${item.calculated_cost}</div>
+                <div className="text-xs text-gray-500">Base: ${item.base_cost}</div>
               </div>
             </div>
-          )) || <div className="text-gray-500">No cost breakdown available</div>}
+          )) || <div className="text-gray-500 text-xs">No cost breakdown available</div>}
         </div>
         
         {damage_assessment_cost.cost_details.missing_parts?.length > 0 && (
-          <div className="mt-4 p-3 bg-yellow-50 rounded-lg">
-            <div className="flex items-center gap-2 mb-2">
-              <AlertTriangle className="h-4 w-4 text-yellow-600" />
-              <span className="font-medium text-yellow-800">Missing Parts Data</span>
+          <div className="mt-3 p-2 bg-yellow-50 rounded-lg">
+            <div className="flex items-center gap-1 mb-1">
+              <AlertTriangle className="h-3 w-3 text-yellow-600" />
+              <span className="font-medium text-yellow-800 text-xs">Missing Parts Data</span>
             </div>
-            <div className="text-sm text-yellow-700">
+            <div className="text-xs text-yellow-700">
               Cost data missing for: {damage_assessment_cost.cost_details.missing_parts.join(', ')}
             </div>
           </div>
@@ -836,9 +836,9 @@ const renderDamageAnalysisResults = () => {
 
         {/* Display formatted breakdown if available */}
         {damage_assessment_cost.cost_details.formatted_breakdown && (
-          <div className="mt-4 p-4 bg-gray-50 rounded-lg">
-            <h4 className="font-medium text-gray-900 mb-2">Detailed Cost Analysis</h4>
-            <pre className="text-sm text-gray-700 whitespace-pre-wrap">
+          <div className="mt-3 p-3 bg-gray-50 rounded-lg">
+            <h4 className="font-medium text-gray-900 mb-1 text-sm">Detailed Cost Analysis</h4>
+            <pre className="text-xs text-gray-700 whitespace-pre-wrap">
               {damage_assessment_cost.cost_details.formatted_breakdown}
             </pre>
           </div>
@@ -852,25 +852,25 @@ const renderDamageAnnotationResults = () => {
   if (!annotatedDamageResult) return null;
 
   return (
-    <div className="space-y-6">
-      <div className="bg-white rounded-lg border p-6">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-          <ImageIcon className="h-5 w-5 text-blue-600" />
+    <div className="space-y-4">
+      <div className="bg-white rounded-lg border p-4">
+        <h3 className="text-base font-semibold text-gray-900 mb-2 flex items-center gap-1">
+          <ImageIcon className="h-4 w-4 text-blue-600" />
           Vehicle Damage Annotation Results
         </h3>
         
-        <div className="space-y-4">
+        <div className="space-y-3">
           {/* Status */}
-          <div className="bg-blue-50 p-4 rounded-lg">
-            <h4 className="font-medium text-blue-900 mb-2">AI Analysis Status</h4>
-            <p className="text-sm text-blue-800">{annotatedDamageResult.status}</p>
+          <div className="bg-blue-50 p-3 rounded-lg">
+            <h4 className="font-medium text-blue-900 mb-1 text-sm">AI Analysis Status</h4>
+            <p className="text-xs text-blue-800">{annotatedDamageResult.status}</p>
           </div>
           
           {/* Annotated Vehicle Images */}
           {annotatedDamageResult.images && annotatedDamageResult.images.length > 0 ? (
             <div>
-              <h4 className="font-medium text-gray-900 mb-3">Annotated Vehicle Images</h4>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <h4 className="font-medium text-gray-900 mb-2 text-sm">Annotated Vehicle Images</h4>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {annotatedDamageResult.images.map((imageData, index) => {
                   const imageUrl = imageData.image?.url || imageData.image?.originalUrl || imageData.url || imageData;
                   const damageLevel = imageData.damageLevel || 'UNKNOWN';
@@ -879,11 +879,11 @@ const renderDamageAnnotationResults = () => {
                   return (
                     <div key={index} className="border rounded-lg overflow-hidden bg-white">
                       {/* Header */}
-                      <div className="bg-gray-50 px-4 py-3 flex items-center justify-between">
-                        <span className="text-sm font-medium text-gray-700">
+                      <div className="bg-gray-50 px-3 py-2 flex items-center justify-between">
+                        <span className="text-xs font-medium text-gray-700">
                           {imageData.caption || `Vehicle View ${index + 1}`}
                         </span>
-                        <span className={`text-xs px-2 py-1 rounded-full font-medium ${
+                        <span className={`text-xs px-1 py-0.5 rounded-full font-medium ${
                           damageLevel === 'HIGH' ? 'bg-red-100 text-red-800' :
                           damageLevel === 'MEDIUM' ? 'bg-yellow-100 text-yellow-800' :
                           damageLevel === 'LOW' ? 'bg-green-100 text-green-800' :
@@ -905,10 +905,10 @@ const renderDamageAnnotationResults = () => {
                             const target = e.target as HTMLImageElement;
                             target.style.display = 'none';
                             target.parentElement!.innerHTML = `
-                              <div class="w-full h-64 flex items-center justify-center bg-gray-100">
+                              <div class="w-full h-48 flex items-center justify-center bg-gray-100">
                                 <div class="text-center">
-                                  <div class="text-gray-400 mb-2">🚗</div>
-                                  <div class="text-sm text-gray-500">Vehicle image not available</div>
+                                  <div class="text-gray-400 mb-1">🚗</div>
+                                  <div class="text-xs text-gray-500">Vehicle image not available</div>
                                 </div>
                               </div>
                             `;
@@ -932,14 +932,14 @@ const renderDamageAnnotationResults = () => {
                                 }}
                               >
                                 {/* Damage Marker */}
-                                <div className={`w-4 h-4 rounded-full border-2 ${
+                                <div className={`w-3 h-3 rounded-full border-2 ${
                                   area.severity === 'high' ? 'bg-red-500 border-red-700' :
                                   area.severity === 'medium' ? 'bg-yellow-500 border-yellow-700' :
                                   'bg-green-500 border-green-700'
                                 } animate-pulse`}></div>
                                 
                                 {/* Damage Label */}
-                                <div className={`absolute top-5 left-1/2 transform -translate-x-1/2 px-2 py-1 rounded text-xs font-medium whitespace-nowrap ${
+                                <div className={`absolute top-4 left-1/2 transform -translate-x-1/2 px-1 py-0.5 rounded text-xs font-medium whitespace-nowrap ${
                                   area.severity === 'high' ? 'bg-red-100 text-red-800' :
                                   area.severity === 'medium' ? 'bg-yellow-100 text-yellow-800' :
                                   'bg-green-100 text-green-800'
@@ -954,18 +954,18 @@ const renderDamageAnnotationResults = () => {
                       
                       {/* Damage Summary */}
                       {damageAreas.length > 0 && (
-                        <div className="p-4 bg-gray-50">
-                          <h5 className="text-sm font-medium text-gray-900 mb-2">Detected Damage Areas:</h5>
+                        <div className="p-2 bg-gray-50">
+                          <h5 className="text-xs font-medium text-gray-900 mb-1">Detected Damage Areas:</h5>
                           <div className="space-y-1">
                             {damageAreas.map((area, areaIndex) => (
-                              <div key={areaIndex} className="flex items-center gap-2 text-sm">
-                                <div className={`w-2 h-2 rounded-full ${
+                              <div key={areaIndex} className="flex items-center gap-1 text-xs">
+                                <div className={`w-1.5 h-1.5 rounded-full ${
                                   area.severity === 'high' ? 'bg-red-500' :
                                   area.severity === 'medium' ? 'bg-yellow-500' :
                                   'bg-green-500'
                                 }`}></div>
                                 <span className="text-gray-700">{area.part}</span>
-                                <span className={`text-xs px-1 py-0.5 rounded ${
+                                <span className={`text-xs px-0.5 py-0 rounded ${
                                   area.severity === 'high' ? 'bg-red-100 text-red-700' :
                                   area.severity === 'medium' ? 'bg-yellow-100 text-yellow-700' :
                                   'bg-green-100 text-green-700'
@@ -983,30 +983,30 @@ const renderDamageAnnotationResults = () => {
               </div>
             </div>
           ) : (
-            <div className="text-center py-8 text-gray-500">
-              <ImageIcon className="h-12 w-12 mx-auto mb-3 opacity-30" />
+            <div className="text-center py-6 text-gray-500 text-sm">
+              <ImageIcon className="h-8 w-8 mx-auto mb-2 opacity-30" />
               <p>No vehicle images available for annotation</p>
             </div>
           )}
           
           {/* Action Buttons */}
-          <div className="flex items-center gap-3 pt-4 border-t border-gray-200">
+          <div className="flex items-center gap-2 pt-3 border-t border-gray-200">
             <button 
               onClick={() => {
                 console.log('Download vehicle annotation results');
               }}
-              className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+              className="flex items-center gap-1 px-3 py-1.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm"
             >
-              <Download className="h-4 w-4" />
+              <Download className="h-3 w-3" />
               Download Analysis
             </button>
             <button 
               onClick={() => {
                 console.log('Share vehicle annotation results');
               }}
-              className="flex items-center gap-2 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
+              className="flex items-center gap-1 px-3 py-1.5 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors text-sm"
             >
-              <Share2 className="h-4 w-4" />
+              <Share2 className="h-3 w-3" />
               Share Results
             </button>
           </div>
@@ -1019,24 +1019,24 @@ const renderDamageAnnotationResults = () => {
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50">
-        <div className="bg-white border-b border-gray-200 px-6 py-4">
-          <div className="flex items-center gap-4">
-            <div className="w-10 h-10 bg-gray-200 rounded-lg animate-pulse"></div>
+        <div className="bg-white border-b border-gray-200 px-4 py-3">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 bg-gray-200 rounded-lg animate-pulse"></div>
             <div>
-              <div className="h-6 w-48 bg-gray-200 rounded animate-pulse mb-2"></div>
-              <div className="h-4 w-32 bg-gray-200 rounded animate-pulse"></div>
+              <div className="h-5 w-40 bg-gray-200 rounded animate-pulse mb-1"></div>
+              <div className="h-3 w-28 bg-gray-200 rounded animate-pulse"></div>
             </div>
           </div>
         </div>
-        <div className="max-w-7xl mx-auto px-6 py-8">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="max-w-7xl mx-auto px-4 py-6">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {[...Array(6)].map((_, i) => (
-              <div key={i} className="bg-white rounded-lg p-6 animate-pulse">
-                <div className="h-4 bg-gray-200 rounded mb-4"></div>
-                <div className="space-y-3">
-                  <div className="h-3 bg-gray-200 rounded"></div>
-                  <div className="h-3 bg-gray-200 rounded"></div>
-                  <div className="h-3 bg-gray-200 rounded"></div>
+              <div key={i} className="bg-white rounded-lg p-4 animate-pulse">
+                <div className="h-3 bg-gray-200 rounded mb-3"></div>
+                <div className="space-y-2">
+                  <div className="h-2.5 bg-gray-200 rounded"></div>
+                  <div className="h-2.5 bg-gray-200 rounded"></div>
+                  <div className="h-2.5 bg-gray-200 rounded"></div>
                 </div>
               </div>
             ))}
@@ -1050,19 +1050,19 @@ const renderDamageAnnotationResults = () => {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
-          <AlertTriangle className="h-16 w-16 text-red-500 mx-auto mb-4" />
-          <h2 className="text-2xl font-semibold text-gray-900 mb-2">Error Loading Claim</h2>
-          <p className="text-gray-600 mb-6">{error || 'Claim not found'}</p>
-          <div className="flex items-center gap-3 justify-center">
+          <AlertTriangle className="h-12 w-12 text-red-500 mx-auto mb-3" />
+          <h2 className="text-xl font-semibold text-gray-900 mb-1">Error Loading Claim</h2>
+          <p className="text-gray-600 mb-4 text-sm">{error || 'Claim not found'}</p>
+          <div className="flex items-center gap-2 justify-center">
             <button
               onClick={onBack}
-              className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50"
+              className="px-3 py-1.5 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 text-sm"
             >
               Go Back
             </button>
             <button
               onClick={fetchClaimDetails}
-              className="px-4 py-2 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600"
+              className="px-3 py-1.5 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 text-sm"
             >
               Try Again
             </button>
@@ -1076,90 +1076,90 @@ const renderDamageAnnotationResults = () => {
     <div className="min-h-screen bg-gray-50">
    
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-6 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="max-w-7xl mx-auto px-4 py-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           
           {/* Left Column - Main Details */}
-          <div className="lg:col-span-2 space-y-6">
+          <div className="lg:col-span-2 space-y-4">
             {/* Claim Overview */}
-            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-              <h2 className="text-xl font-semibold text-gray-900 mb-6 flex items-center gap-2">
-                <Info className="h-5 w-5 text-blue-600" />
+            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+              <h2 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-1">
+                <Info className="h-4 w-4 text-blue-600" />
                 Claim Overview
               </h2>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-3">
                   <div>
-                    <label className="text-sm font-medium text-gray-500">Claim Number</label>
-                    <p className="text-lg font-semibold text-gray-900">{claim.claim_number || `#${claim.id}`}</p>
+                    <label className="text-xs font-medium text-gray-500">Claim Number</label>
+                    <p className="text-base font-semibold text-gray-900">{claim.claim_number || `#${claim.id}`}</p>
                   </div>
                   <div>
-                    <label className="text-sm font-medium text-gray-500">Claim Type</label>
-                    <p className="text-gray-900 capitalize">{claim.claim_type?.replace('_', ' ') || 'Vehicle Damage'}</p>
+                    <label className="text-xs font-medium text-gray-500">Claim Type</label>
+                    <p className="text-gray-900 capitalize text-sm">{claim.claim_type?.replace('_', ' ') || 'Vehicle Damage'}</p>
                   </div>
                   <div>
-                    <label className="text-sm font-medium text-gray-500">Claimant Role</label>
-                    <p className="text-gray-900 capitalize">{claim.claimant_role?.replace('_', ' ') || 'Driver'}</p>
+                    <label className="text-xs font-medium text-gray-500">Claimant Role</label>
+                    <p className="text-gray-900 capitalize text-sm">{claim.claimant_role?.replace('_', ' ') || 'Driver'}</p>
                   </div>
                 </div>
                 
-                <div className="space-y-4">
+                <div className="space-y-3">
                   <div>
-                    <label className="text-sm font-medium text-gray-500">User ID</label>
-                    <p className="text-gray-900">{claim.user_id}</p>
+                    <label className="text-xs font-medium text-gray-500">User ID</label>
+                    <p className="text-gray-900 text-sm">{claim.user_id}</p>
                   </div>
                   <div>
-                    <label className="text-sm font-medium text-gray-500">Estimated Cost</label>
-                    <p className="text-lg font-semibold text-green-600">
+                    <label className="text-xs font-medium text-gray-500">Estimated Cost</label>
+                    <p className="text-base font-semibold text-green-600">
                       {claim.estimated_cost ? `$${claim.estimated_cost.toLocaleString()}` : 'Not estimated'}
                     </p>
                   </div>
                   <div>
-                    <label className="text-sm font-medium text-gray-500">Last Updated</label>
-                    <p className="text-gray-900">{formatDate(claim.updated_at)}</p>
+                    <label className="text-xs font-medium text-gray-500">Last Updated</label>
+                    <p className="text-gray-900 text-sm">{formatDate(claim.updated_at)}</p>
                   </div>
                 </div>
               </div>
             </div>
 
             {/* Vehicle Information */}
-            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-              <h2 className="text-xl font-semibold text-gray-900 mb-6 flex items-center gap-2">
-                <Car className="h-5 w-5 text-green-600" />
+            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+              <h2 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-1">
+                <Car className="h-4 w-4 text-green-600" />
                 Vehicle Information
               </h2>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-3">
                   <div>
-                    <label className="text-sm font-medium text-gray-500">Make & Model</label>
-                    <p className="text-lg font-semibold text-gray-900">
+                    <label className="text-xs font-medium text-gray-500">Make & Model</label>
+                    <p className="text-base font-semibold text-gray-900">
                       {claim.vehicle_make || claim.car_brand} {claim.vehicle_model}
                     </p>
                   </div>
                   <div>
-                    <label className="text-sm font-medium text-gray-500">Type</label>
-                    <p className="text-gray-900 capitalize">{claim.vehicle_type || claim.car_type}</p>
+                    <label className="text-xs font-medium text-gray-500">Type</label>
+                    <p className="text-gray-900 capitalize text-sm">{claim.vehicle_type || claim.car_type}</p>
                   </div>
                   <div>
-                    <label className="text-sm font-medium text-gray-500">Year</label>
-                    <p className="text-gray-900">{claim.vehicle_year || 'Not specified'}</p>
+                    <label className="text-xs font-medium text-gray-500">Year</label>
+                    <p className="text-gray-900 text-sm">{claim.vehicle_year || 'Not specified'}</p>
                   </div>
                 </div>
                 
-                <div className="space-y-4">
+                <div className="space-y-3">
                   <div>
-                    <label className="text-sm font-medium text-gray-500">Plate Number</label>
-                    <p className="text-gray-900 font-mono">{claim.vehicle_plate || 'Not provided'}</p>
+                    <label className="text-xs font-medium text-gray-500">Plate Number</label>
+                    <p className="text-gray-900 font-mono text-sm">{claim.vehicle_plate || 'Not provided'}</p>
                   </div>
                   <div>
-                    <label className="text-sm font-medium text-gray-500">Color</label>
-                    <p className="text-gray-900 capitalize">{claim.vehicle_color || 'Not specified'}</p>
+                    <label className="text-xs font-medium text-gray-500">Color</label>
+                    <p className="text-gray-900 capitalize text-sm">{claim.vehicle_color || 'Not specified'}</p>
                   </div>
                   <div>
-                    <label className="text-sm font-medium text-gray-500">Chassis Number</label>
-                    <p className="text-gray-900 font-mono text-sm">{claim.vehicle_chassis || 'Not provided'}</p>
+                    <label className="text-xs font-medium text-gray-500">Chassis Number</label>
+                    <p className="text-gray-900 font-mono text-xs">{claim.vehicle_chassis || 'Not provided'}</p>
                   </div>
                 </div>
               </div>
@@ -1167,133 +1167,133 @@ const renderDamageAnnotationResults = () => {
 
             {/* Policy Holder Information */}
             {claim.policy_holder_name && (
-              <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-                <h2 className="text-xl font-semibold text-gray-900 mb-6 flex items-center gap-2">
-                  <User className="h-5 w-5 text-purple-600" />
+              <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+                <h2 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-1">
+                  <User className="h-4 w-4 text-purple-600" />
                   Policy Holder Information
                 </h2>
                 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-3">
                     <div>
-                      <label className="text-sm font-medium text-gray-500">Full Name</label>
-                      <p className="text-lg font-semibold text-gray-900">{claim.policy_holder_name}</p>
+                      <label className="text-xs font-medium text-gray-500">Full Name</label>
+                      <p className="text-base font-semibold text-gray-900">{claim.policy_holder_name}</p>
                     </div>
                     <div>
-                      <label className="text-sm font-medium text-gray-500">Relationship</label>
-                      <p className="text-gray-900 capitalize">{claim.policy_holder_relationship || 'Self'}</p>
+                      <label className="text-xs font-medium text-gray-500">Relationship</label>
+                      <p className="text-gray-900 capitalize text-sm">{claim.policy_holder_relationship || 'Self'}</p>
                     </div>
                   </div>
                   
-                  <div className="space-y-4">
+                  <div className="space-y-3">
                     <div>
-                      <label className="text-sm font-medium text-gray-500">Phone</label>
-                      <p className="text-gray-900 flex items-center gap-2">
-                        <Phone className="h-4 w-4 text-gray-400" />
+                      <label className="text-xs font-medium text-gray-500">Phone</label>
+                      <p className="text-gray-900 flex items-center gap-1 text-sm">
+                        <Phone className="h-3 w-3 text-gray-400" />
                         {claim.policy_holder_phone}
                       </p>
                     </div>
                     <div>
-                      <label className="text-sm font-medium text-gray-500">Email</label>
-                      <p className="text-gray-900 flex items-center gap-2">
-                        <Mail className="h-4 w-4 text-gray-400" />
+                      <label className="text-xs font-medium text-gray-500">Email</label>
+                      <p className="text-gray-900 flex items-center gap-1 text-sm">
+                        <Mail className="h-3 w-3 text-gray-400" />
                         {claim.policy_holder_email}
                       </p>
                     </div>
                   </div>
                 </div>
                 
-                <div className="mt-4 pt-4 border-t border-gray-200">
+                <div className="mt-3 pt-3 border-t border-gray-200">
                   <div>
-                    <label className="text-sm font-medium text-gray-500">Policy Number</label>
-                    <p className="text-lg font-mono text-gray-900">{claim.policy_number}</p>
+                    <label className="text-xs font-medium text-gray-500">Policy Number</label>
+                    <p className="font-mono text-gray-900 text-sm">{claim.policy_number}</p>
                   </div>
                 </div>
               </div>
             )}
 
             {/* Incident Details */}
-            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-              <h2 className="text-xl font-semibold text-gray-900 mb-6 flex items-center gap-2">
-                <AlertTriangle className="h-5 w-5 text-orange-600" />
+            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+              <h2 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-1">
+                <AlertTriangle className="h-4 w-4 text-orange-600" />
                 Incident Details
               </h2>
               
-              <div className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <label className="text-sm font-medium text-gray-500">Date & Time</label>
-                    <p className="text-gray-900 flex items-center gap-2">
-                      <Calendar className="h-4 w-4 text-gray-400" />
+                    <label className="text-xs font-medium text-gray-500">Date & Time</label>
+                    <p className="text-gray-900 flex items-center gap-1 text-sm">
+                      <Calendar className="h-3 w-3 text-gray-400" />
                       {claim.incident_date} at {claim.incident_time}
                     </p>
                   </div>
                   <div>
-                    <label className="text-sm font-medium text-gray-500">Location</label>
-                    <p className="text-gray-900 flex items-center gap-2">
-                      <MapPin className="h-4 w-4 text-gray-400" />
+                    <label className="text-xs font-medium text-gray-500">Location</label>
+                    <p className="text-gray-900 flex items-center gap-1 text-sm">
+                      <MapPin className="h-3 w-3 text-gray-400" />
                       {claim.incident_location_data ? 'Location recorded' : 'Not specified'}
                     </p>
                   </div>
                 </div>
                 
                 <div>
-                  <label className="text-sm font-medium text-gray-500">Description</label>
-                  <div className="mt-2 p-4 bg-gray-50 rounded-lg">
-                    <p className="text-gray-900 leading-relaxed">
+                  <label className="text-xs font-medium text-gray-500">Description</label>
+                  <div className="mt-1 p-3 bg-gray-50 rounded-lg">
+                    <p className="text-gray-900 leading-relaxed text-sm">
                       {claim.description || 'No description provided'}
                     </p>
                   </div>
                 </div>
 
                 {/* Additional incident info */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <div className="p-4 bg-gray-50 rounded-lg">
-                    <div className="text-sm font-medium text-gray-500 mb-1">Injuries Reported</div>
-                    <div className="flex items-center gap-2">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                  <div className="p-3 bg-gray-50 rounded-lg">
+                    <div className="text-xs font-medium text-gray-500 mb-1">Injuries Reported</div>
+                    <div className="flex items-center gap-1">
                       {claim.has_injuries ? (
                         <>
-                          <XCircle className="h-4 w-4 text-red-500" />
-                          <span className="text-red-700">Yes</span>
+                          <XCircle className="h-3 w-3 text-red-500" />
+                          <span className="text-red-700 text-sm">Yes</span>
                         </>
                       ) : (
                         <>
-                          <CheckCircle className="h-4 w-4 text-green-500" />
-                          <span className="text-green-700">No</span>
+                          <CheckCircle className="h-3 w-3 text-green-500" />
+                          <span className="text-green-700 text-sm">No</span>
                         </>
                       )}
                     </div>
                   </div>
                   
-                  <div className="p-4 bg-gray-50 rounded-lg">
-                    <div className="text-sm font-medium text-gray-500 mb-1">Police Report</div>
-                    <div className="flex items-center gap-2">
+                  <div className="p-3 bg-gray-50 rounded-lg">
+                    <div className="text-xs font-medium text-gray-500 mb-1">Police Report</div>
+                    <div className="flex items-center gap-1">
                       {claim.police_report_filed ? (
                         <>
-                          <CheckCircle className="h-4 w-4 text-green-500" />
-                          <span className="text-green-700">Filed</span>
+                          <CheckCircle className="h-3 w-3 text-green-500" />
+                          <span className="text-green-700 text-sm">Filed</span>
                         </>
                       ) : (
                         <>
-                          <XCircle className="h-4 w-4 text-red-500" />
-                          <span className="text-red-700">Not filed</span>
+                          <XCircle className="h-3 w-3 text-red-500" />
+                          <span className="text-red-700 text-sm">Not filed</span>
                         </>
                       )}
                     </div>
                   </div>
                   
-                  <div className="p-4 bg-gray-50 rounded-lg">
-                    <div className="text-sm font-medium text-gray-500 mb-1">Witnesses</div>
-                    <div className="flex items-center gap-2">
+                  <div className="p-3 bg-gray-50 rounded-lg">
+                    <div className="text-xs font-medium text-gray-500 mb-1">Witnesses</div>
+                    <div className="flex items-center gap-1">
                       {claim.has_witnesses ? (
                         <>
-                          <CheckCircle className="h-4 w-4 text-green-500" />
-                          <span className="text-green-700">Present</span>
+                          <CheckCircle className="h-3 w-3 text-green-500" />
+                          <span className="text-green-700 text-sm">Present</span>
                         </>
                       ) : (
                         <>
-                          <XCircle className="h-4 w-4 text-red-500" />
-                          <span className="text-red-700">None</span>
+                          <XCircle className="h-3 w-3 text-red-500" />
+                          <span className="text-red-700 text-sm">None</span>
                         </>
                       )}
                     </div>
@@ -1303,28 +1303,28 @@ const renderDamageAnnotationResults = () => {
             </div>
 
             {/* Images Gallery with AI Integration */}
-            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-xl font-semibold text-gray-900 flex items-center gap-2">
-                  <Database className="h-5 w-5 text-purple-600" />
+            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-lg font-semibold text-gray-900 flex items-center gap-1">
+                  <Database className="h-4 w-4 text-purple-600" />
                   Evidence Gallery ({claim.images.length} images)
                 </h2>
                 
                 {/* AI Analysis Buttons */}
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-2">
                   <button
                     onClick={runDamageAnalysis}
                     disabled={aiAnalysisLoading || !hasAllAnglePhotos()}
-                    className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors ${
+                    className={`flex items-center gap-1 px-3 py-1.5 rounded-lg font-medium transition-colors text-sm ${
                       aiAnalysisLoading || !hasAllAnglePhotos()
                         ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
                         : 'bg-blue-600 text-white hover:bg-blue-700'
                     }`}
                   >
                     {aiAnalysisLoading ? (
-                      <Loader2 className="h-4 w-4 animate-spin" />
+                      <Loader2 className="h-3 w-3 animate-spin" />
                     ) : (
-                      <Brain className="h-4 w-4" />
+                      <Brain className="h-3 w-3" />
                     )}
                     AI Damage Analysis
                   </button>
@@ -1332,16 +1332,16 @@ const renderDamageAnnotationResults = () => {
                   <button
                     onClick={runDamageAnnotation}
                     disabled={aiAnnotationLoading || !hasAllAnglePhotos()}
-                    className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors ${
+                    className={`flex items-center gap-1 px-3 py-1.5 rounded-lg font-medium transition-colors text-sm ${
                       aiAnnotationLoading || !hasAllAnglePhotos()
                         ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
                         : 'bg-purple-600 text-white hover:bg-purple-700'
                     }`}
                   >
                     {aiAnnotationLoading ? (
-                      <Loader2 className="h-4 w-4 animate-spin" />
+                      <Loader2 className="h-3 w-3 animate-spin" />
                     ) : (
-                      <Zap className="h-4 w-4" />
+                      <Zap className="h-3 w-3" />
                     )}
                     AI Annotation
                   </button>
@@ -1350,15 +1350,15 @@ const renderDamageAnnotationResults = () => {
 
               {/* Car Angle Photos Status */}
               {claim.car_angle_photos && (
-                <div className="mb-6 p-4 bg-blue-50 rounded-lg">
-                  <div className="flex items-center justify-between mb-3">
-                    <h3 className="font-medium text-blue-900">Car Angle Photos</h3>
-                    <span className="text-sm text-blue-700">
+                <div className="mb-4 p-3 bg-blue-50 rounded-lg">
+                  <div className="flex items-center justify-between mb-2">
+                    <h3 className="font-medium text-blue-900 text-sm">Car Angle Photos</h3>
+                    <span className="text-xs text-blue-700">
                       {claim.car_angle_photos.captured_angles}/4 angles captured
                     </span>
                   </div>
                   
-                  <div className="grid grid-cols-4 gap-3">
+                  <div className="grid grid-cols-4 gap-2">
                     {[
                       { key: 'front_image', label: 'Front', color: 'blue' },
                       { key: 'rear_image', label: 'Rear', color: 'green' },
@@ -1366,11 +1366,11 @@ const renderDamageAnnotationResults = () => {
                       { key: 'right_image', label: 'Right', color: 'red' }
                     ].map((angle) => (
                       <div key={angle.key} className="text-center">
-                        <div className={`w-16 h-16 mx-auto rounded-lg border-2 ${
+                        <div className={`w-12 h-12 mx-auto rounded-lg border-2 ${
                           claim.car_angle_photos[angle.key as keyof typeof claim.car_angle_photos]
                             ? `border-${angle.color}-500 bg-${angle.color}-100`
                             : 'border-gray-300 bg-gray-100'
-                        } flex items-center justify-center mb-2`}>
+                        } flex items-center justify-center mb-1`}>
                           {claim.car_angle_photos[angle.key as keyof typeof claim.car_angle_photos] ? (
                             <img
                               src={`http://192.168.0.7:8000${claim.car_angle_photos[angle.key as keyof typeof claim.car_angle_photos]}`}
@@ -1378,7 +1378,7 @@ const renderDamageAnnotationResults = () => {
                               className="w-full h-full object-cover rounded-lg"
                             />
                           ) : (
-                            <Car className="h-6 w-6 text-gray-400" />
+                            <Car className="h-4 w-4 text-gray-400" />
                           )}
                         </div>
                         <span className={`text-xs font-medium ${
@@ -1393,8 +1393,8 @@ const renderDamageAnnotationResults = () => {
                   </div>
                   
                   {claim.car_angle_photos.captured_angles < 4 && (
-                    <div className="mt-3 p-2 bg-yellow-100 rounded text-sm text-yellow-800">
-                      <AlertTriangle className="h-4 w-4 inline mr-1" />
+                    <div className="mt-2 p-1.5 bg-yellow-100 rounded text-xs text-yellow-800">
+                      <AlertTriangle className="h-3 w-3 inline mr-1" />
                       All 4 car angle photos are required for AI analysis
                     </div>
                   )}
@@ -1403,7 +1403,7 @@ const renderDamageAnnotationResults = () => {
 
               {/* Regular Images */}
               {claim.images.length > 0 ? (
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
                   {claim.images.map((image, index) => (
                     <div key={image.id} className="relative group cursor-pointer">
                       <div 
@@ -1420,7 +1420,7 @@ const renderDamageAnnotationResults = () => {
                             target.parentElement!.innerHTML = `
                               <div class="w-full h-full flex items-center justify-center bg-gray-100">
                                 <div class="text-center">
-                                  <div class="w-8 h-8 mx-auto mb-2 text-gray-400">📷</div>
+                                  <div class="w-6 h-6 mx-auto mb-1 text-gray-400">📷</div>
                                   <div class="text-xs text-gray-500">Image not found</div>
                                 </div>
                               </div>
@@ -1428,20 +1428,20 @@ const renderDamageAnnotationResults = () => {
                           }}
                         />
                         <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-opacity flex items-center justify-center">
-                          <ZoomIn className="h-6 w-6 text-white opacity-0 group-hover:opacity-100 transition-opacity" />
+                          <ZoomIn className="h-4 w-4 text-white opacity-0 group-hover:opacity-100 transition-opacity" />
                         </div>
                       </div>
                       
-                      <div className="mt-2">
+                      <div className="mt-1">
                         <div className="flex items-center justify-between">
-                          <p className="text-sm font-medium text-gray-900 capitalize">
+                          <p className="text-xs font-medium text-gray-900 capitalize">
                             {image.car_angle ? `${image.car_angle} angle` : image.image_type}
                           </p>
                           <span className="text-xs text-gray-500">{formatFileSize(image.file_size)}</span>
                         </div>
                         <p className="text-xs text-gray-500 truncate">{image.original_filename}</p>
                         {image.car_angle && (
-                          <span className="inline-block mt-1 px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">
+                          <span className="inline-block mt-0.5 px-1.5 py-0.5 bg-blue-100 text-blue-800 text-xs rounded-full">
                             Car Angle
                           </span>
                         )}
@@ -1450,8 +1450,8 @@ const renderDamageAnnotationResults = () => {
                   ))}
                 </div>
               ) : (
-                <div className="text-center py-8 text-gray-500">
-                  <Database className="h-12 w-12 mx-auto mb-3 opacity-30" />
+                <div className="text-center py-6 text-gray-500 text-sm">
+                  <Database className="h-8 w-8 mx-auto mb-2 opacity-30" />
                   <p>No images uploaded for this claim</p>
                 </div>
               )}
@@ -1459,51 +1459,51 @@ const renderDamageAnnotationResults = () => {
 
             {/* AI Results Section */}
             {showAIResults && (
-              <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-                <div className="flex items-center justify-between mb-6">
-                  <h2 className="text-xl font-semibold text-gray-900 flex items-center gap-2">
-                    <Brain className="h-5 w-5 text-purple-600" />
+              <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+                <div className="flex items-center justify-between mb-4">
+                  <h2 className="text-lg font-semibold text-gray-900 flex items-center gap-1">
+                    <Brain className="h-4 w-4 text-purple-600" />
                     AI Analysis Results
                   </h2>
                   <button
                     onClick={() => setShowAIResults(false)}
-                    className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
+                    className="p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
                   >
-                    <X className="h-5 w-5" />
+                    <X className="h-4 w-4" />
                   </button>
                 </div>
 
                 {/* AI Results Tabs */}
-                <div className="border-b border-gray-200 mb-6">
-                  <nav className="flex space-x-8">
+                <div className="border-b border-gray-200 mb-4">
+                  <nav className="flex space-x-6">
                     <button
                       onClick={() => setActiveAITab('damage_analysis')}
-                      className={`py-2 px-1 border-b-2 font-medium text-sm flex items-center gap-2 ${
+                      className={`py-1.5 px-1 border-b-2 font-medium text-xs flex items-center gap-1 ${
                         activeAITab === 'damage_analysis'
                           ? 'border-blue-500 text-blue-600'
                           : 'border-transparent text-gray-500 hover:text-gray-700'
                       }`}
                     >
-                      <BarChart3 className="h-4 w-4" />
+                      <BarChart3 className="h-3 w-3" />
                       Damage Analysis
                       {damageAnalysisResult && (
-                        <span className="bg-blue-100 text-blue-600 px-2 py-0.5 rounded-full text-xs">
+                        <span className="bg-blue-100 text-blue-600 px-1.5 py-0.5 rounded-full text-xs">
                           Ready
                         </span>
                       )}
                     </button>
                     <button
                       onClick={() => setActiveAITab('damage_annotation')}
-                      className={`py-2 px-1 border-b-2 font-medium text-sm flex items-center gap-2 ${
+                      className={`py-1.5 px-1 border-b-2 font-medium text-xs flex items-center gap-1 ${
                         activeAITab === 'damage_annotation'
                           ? 'border-purple-500 text-purple-600'
                           : 'border-transparent text-gray-500 hover:text-gray-700'
                       }`}
                     >
-                      <ImageIcon className="h-4 w-4" />
+                      <ImageIcon className="h-3 w-3" />
                       Damage Annotation
                       {annotatedDamageResult && (
-                        <span className="bg-purple-100 text-purple-600 px-2 py-0.5 rounded-full text-xs">
+                        <span className="bg-purple-100 text-purple-600 px-1.5 py-0.5 rounded-full text-xs">
                           Ready
                         </span>
                       )}
@@ -1517,10 +1517,10 @@ const renderDamageAnnotationResults = () => {
                     {damageAnalysisResult ? (
                       renderDamageAnalysisResults()
                     ) : (
-                      <div className="text-center py-8 text-gray-500">
-                        <Brain className="h-12 w-12 mx-auto mb-3 opacity-30" />
+                      <div className="text-center py-6 text-gray-500 text-sm">
+                        <Brain className="h-8 w-8 mx-auto mb-2 opacity-30" />
                         <p>No damage analysis results available</p>
-                        <p className="text-sm mt-1">Click "AI Damage Analysis" to run the analysis</p>
+                        <p className="text-xs mt-1">Click "AI Damage Analysis" to run the analysis</p>
                       </div>
                     )}
                   </div>
@@ -1531,10 +1531,10 @@ const renderDamageAnnotationResults = () => {
                     {annotatedDamageResult ? (
                       renderDamageAnnotationResults()
                     ) : (
-                      <div className="text-center py-8 text-gray-500">
-                        <ImageIcon className="h-12 w-12 mx-auto mb-3 opacity-30" />
+                      <div className="text-center py-6 text-gray-500 text-sm">
+                        <ImageIcon className="h-8 w-8 mx-auto mb-2 opacity-30" />
                         <p>No damage annotation results available</p>
-                        <p className="text-sm mt-1">Click "AI Annotation" to run the annotation</p>
+                        <p className="text-xs mt-1">Click "AI Annotation" to run the annotation</p>
                       </div>
                     )}
                   </div>
@@ -1544,22 +1544,22 @@ const renderDamageAnnotationResults = () => {
           </div>
 
           {/* Right Column - Actions & Status */}
-          <div className="space-y-6">
+          <div className="space-y-4">
             
             {/* Status Management */}
-            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-                <Shield className="h-5 w-5 text-blue-600" />
+            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+              <h3 className="text-base font-semibold text-gray-900 mb-3 flex items-center gap-1">
+                <Shield className="h-4 w-4 text-blue-600" />
                 Status Management
               </h3>
               
-              <div className="space-y-4">
+              <div className="space-y-3">
                 <div>
-                  <label className="text-sm font-medium text-gray-700 mb-2 block">Current Status</label>
-                  <div className={`p-3 rounded-lg border ${getStatusColor(claim.status)}`}>
-                    <div className="flex items-center gap-2">
+                  <label className="text-xs font-medium text-gray-700 mb-1 block">Current Status</label>
+                  <div className={`p-2 rounded-lg border ${getStatusColor(claim.status)}`}>
+                    <div className="flex items-center gap-1">
                       {getStatusIcon(claim.status)}
-                      <span className="font-medium capitalize">
+                      <span className="font-medium capitalize text-sm">
                         {claim.status.replace('_', ' ')}
                       </span>
                     </div>
@@ -1567,11 +1567,11 @@ const renderDamageAnnotationResults = () => {
                 </div>
                 
                 <div>
-                  <label className="text-sm font-medium text-gray-700 mb-2 block">Change Status</label>
+                  <label className="text-xs font-medium text-gray-700 mb-1 block">Change Status</label>
                   <select
                     value={selectedStatus}
                     onChange={(e) => setSelectedStatus(e.target.value)}
-                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                    className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-sm"
                   >
                     <option value="pending">Pending</option>
                     <option value="under_review">Under Review</option>
@@ -1581,25 +1581,25 @@ const renderDamageAnnotationResults = () => {
                   </select>
                 </div>
                 
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-2 gap-2">
                   <button
                     onClick={() => handleStatusUpdate(selectedStatus)}
                     disabled={updating || selectedStatus === claim.status}
-                    className="flex items-center justify-center gap-2 px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                    className="flex items-center justify-center gap-1 px-3 py-1.5 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-sm"
                   >
                     {updating ? (
-                      <RefreshCw className="h-4 w-4 animate-spin" />
+                      <RefreshCw className="h-3 w-3 animate-spin" />
                     ) : (
-                      <Save className="h-4 w-4" />
+                      <Save className="h-3 w-3" />
                     )}
                     Update
                   </button>
                   
                   <button
                     onClick={fetchClaimDetails}
-                    className="flex items-center justify-center gap-2 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
+                    className="flex items-center justify-center gap-1 px-3 py-1.5 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors text-sm"
                   >
-                    <RefreshCw className="h-4 w-4" />
+                    <RefreshCw className="h-3 w-3" />
                     Refresh
                   </button>
                 </div>
@@ -1607,26 +1607,26 @@ const renderDamageAnnotationResults = () => {
             </div>
 
             {/* AI Quick Actions */}
-            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-                <Brain className="h-5 w-5 text-purple-600" />
+            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+              <h3 className="text-base font-semibold text-gray-900 mb-3 flex items-center gap-1">
+                <Brain className="h-4 w-4 text-purple-600" />
                 AI Quick Actions
               </h3>
               
-              <div className="space-y-3">
+              <div className="space-y-2">
                 <button
                   onClick={runDamageAnalysis}
                   disabled={aiAnalysisLoading || !hasAllAnglePhotos()}
-                  className={`w-full flex items-center justify-center gap-2 px-4 py-3 rounded-lg font-medium transition-colors ${
+                  className={`w-full flex items-center justify-center gap-1 px-3 py-2 rounded-lg font-medium transition-colors text-sm ${
                     aiAnalysisLoading || !hasAllAnglePhotos()
                       ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
                       : 'bg-blue-600 text-white hover:bg-blue-700'
                   }`}
                 >
                   {aiAnalysisLoading ? (
-                    <Loader2 className="h-4 w-4 animate-spin" />
+                    <Loader2 className="h-3 w-3 animate-spin" />
                   ) : (
-                    <BarChart3 className="h-4 w-4" />
+                    <BarChart3 className="h-3 w-3" />
                   )}
                   Run Damage Analysis
                 </button>
@@ -1634,16 +1634,16 @@ const renderDamageAnnotationResults = () => {
                <button
                   onClick={runDamageAnnotation}
                   disabled={aiAnnotationLoading || !hasAllAnglePhotos()}
-                  className={`w-full flex items-center justify-center gap-2 px-4 py-3 rounded-lg font-medium transition-colors ${
+                  className={`w-full flex items-center justify-center gap-1 px-3 py-2 rounded-lg font-medium transition-colors text-sm ${
                     aiAnnotationLoading || !hasAllAnglePhotos()
                       ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
                       : 'bg-purple-600 text-white hover:bg-purple-700'
                   }`}
                 >
                   {aiAnnotationLoading ? (
-                    <Loader2 className="h-4 w-4 animate-spin" />
+                    <Loader2 className="h-3 w-3 animate-spin" />
                   ) : (
-                    <ImageIcon className="h-4 w-4" />
+                    <ImageIcon className="h-3 w-3" />
                   )}
                   Generate Annotation
                 </button>
@@ -1651,21 +1651,21 @@ const renderDamageAnnotationResults = () => {
                 {(damageAnalysisResult || annotatedDamageResult) && (
                   <button
                     onClick={() => setShowAIResults(true)}
-                    className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+                    className="w-full flex items-center justify-center gap-1 px-3 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors text-sm"
                   >
-                    <Eye className="h-4 w-4" />
+                    <Eye className="h-3 w-3" />
                     View AI Results
                   </button>
                 )}
               </div>
               
               {!hasAllAnglePhotos() && (
-                <div className="mt-4 p-3 bg-yellow-50 rounded-lg">
-                  <div className="flex items-center gap-2 mb-1">
-                    <AlertTriangle className="h-4 w-4 text-yellow-600" />
-                    <span className="text-sm font-medium text-yellow-800">Requirements</span>
+                <div className="mt-3 p-2 bg-yellow-50 rounded-lg">
+                  <div className="flex items-center gap-1 mb-1">
+                    <AlertTriangle className="h-3 w-3 text-yellow-600" />
+                    <span className="text-xs font-medium text-yellow-800">Requirements</span>
                   </div>
-                  <p className="text-sm text-yellow-700">
+                  <p className="text-xs text-yellow-700">
                     All 4 car angle photos are required for AI analysis
                   </p>
                 </div>
@@ -1673,54 +1673,54 @@ const renderDamageAnnotationResults = () => {
             </div>
 
             {/* Quick Actions */}
-            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-                <Activity className="h-5 w-5 text-purple-600" />
+            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+              <h3 className="text-base font-semibold text-gray-900 mb-3 flex items-center gap-1">
+                <Activity className="h-4 w-4 text-purple-600" />
                 Quick Actions
               </h3>
               
-              <div className="space-y-3">
+              <div className="space-y-2">
                 <button
                   onClick={() => handleStatusUpdate('approved')}
                   disabled={updating}
-                  className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50 transition-colors"
+                  className="w-full flex items-center justify-center gap-1 px-3 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50 transition-colors text-sm"
                 >
-                  <CheckCircle className="h-4 w-4" />
+                  <CheckCircle className="h-3 w-3" />
                   Approve Claim
                 </button>
                 
                 <button
                   onClick={() => handleStatusUpdate('rejected')}
                   disabled={updating}
-                  className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 disabled:opacity-50 transition-colors"
+                  className="w-full flex items-center justify-center gap-1 px-3 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 disabled:opacity-50 transition-colors text-sm"
                 >
-                  <XCircle className="h-4 w-4" />
+                  <XCircle className="h-3 w-3" />
                   Reject Claim
                 </button>
                 
                 <button
                   onClick={() => handleStatusUpdate('under_review')}
                   disabled={updating}
-                  className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 transition-colors"
+                  className="w-full flex items-center justify-center gap-1 px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 transition-colors text-sm"
                 >
-                  <Eye className="h-4 w-4" />
+                  <Eye className="h-3 w-3" />
                   Mark for Review
                 </button>
               </div>
             </div>
 
             {/* Admin Notes */}
-            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-                <Edit className="h-5 w-5 text-orange-600" />
+            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+              <h3 className="text-base font-semibold text-gray-900 mb-3 flex items-center gap-1">
+                <Edit className="h-4 w-4 text-orange-600" />
                 Admin Notes
               </h3>
               
-              <div className="space-y-4">
+              <div className="space-y-3">
                 <textarea
                   value={adminNotes}
                   onChange={(e) => setAdminNotes(e.target.value)}
-                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent resize-none"
+                  className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent resize-none text-sm"
                   rows={4}
                   placeholder="Add internal notes about this claim..."
                 />
@@ -1728,9 +1728,9 @@ const renderDamageAnnotationResults = () => {
                 <button
                   onClick={handleSaveNotes}
                   disabled={updating}
-                  className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 disabled:opacity-50 transition-colors"
+                  className="w-full flex items-center justify-center gap-1 px-3 py-1.5 bg-gray-600 text-white rounded-lg hover:bg-gray-700 disabled:opacity-50 transition-colors text-sm"
                 >
-                  <Save className="h-4 w-4" />
+                  <Save className="h-3 w-3" />
                   Save Notes
                 </button>
                 
@@ -1741,52 +1741,52 @@ const renderDamageAnnotationResults = () => {
             </div>
 
             {/* Cost Estimation */}
-            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-                <DollarSign className="h-5 w-5 text-green-600" />
+            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+              <h3 className="text-base font-semibold text-gray-900 mb-3 flex items-center gap-1">
+                <DollarSign className="h-4 w-4 text-green-600" />
                 Cost Estimation
               </h3>
               
-              <div className="space-y-4">
-                <div className="p-4 bg-gray-50 rounded-lg">
-                  <div className="text-sm font-medium text-gray-500 mb-1">Current Estimate</div>
-                  <div className="text-2xl font-bold text-green-600">
+              <div className="space-y-3">
+                <div className="p-3 bg-gray-50 rounded-lg">
+                  <div className="text-xs font-medium text-gray-500 mb-1">Current Estimate</div>
+                  <div className="text-xl font-bold text-green-600">
                     {claim.estimated_cost ? `$${claim.estimated_cost.toLocaleString()}` : 'Not set'}
                   </div>
                   {damageAnalysisResult && (
-                    <div className="mt-2 text-sm text-blue-600">
+                    <div className="mt-1 text-xs text-blue-600">
                       AI Estimate: ${damageAnalysisResult.damage_assessment_cost.cost_details.total_estimated_cost.toLocaleString()}
                     </div>
                   )}
                 </div>
                 
                 <div>
-                  <label className="text-sm font-medium text-gray-700 mb-2 block">Update Estimate</label>
+                  <label className="text-xs font-medium text-gray-700 mb-1 block">Update Estimate</label>
                   <input
                     type="number"
                     value={estimatedCost}
                     onChange={(e) => setEstimatedCost(e.target.value)}
                     placeholder="Enter amount"
-                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                    className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-sm"
                   />
                 </div>
                 
-                <div className="grid grid-cols-2 gap-2">
+                <div className="grid grid-cols-2 gap-1.5">
                   <button 
                     onClick={handleUpdateCost}
                     disabled={updating || !estimatedCost}
-                    className="flex items-center justify-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50 transition-colors"
+                    className="flex items-center justify-center gap-1 px-3 py-1.5 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50 transition-colors text-sm"
                   >
-                    <DollarSign className="h-4 w-4" />
+                    <DollarSign className="h-3 w-3" />
                     Update
                   </button>
                   
                   {damageAnalysisResult && (
                     <button
                       onClick={() => setEstimatedCost(damageAnalysisResult.damage_assessment_cost.cost_details.total_estimated_cost.toString())}
-                      className="flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm"
+                      className="flex items-center justify-center gap-1 px-3 py-1.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-xs"
                     >
-                      <Brain className="h-4 w-4" />
+                      <Brain className="h-3 w-3" />
                       Use AI
                     </button>
                   )}
@@ -1795,16 +1795,16 @@ const renderDamageAnnotationResults = () => {
             </div>
 
             {/* Timeline */}
-            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-                <Clock className="h-5 w-5 text-blue-600" />
+            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+              <h3 className="text-base font-semibold text-gray-900 mb-3 flex items-center gap-1">
+                <Clock className="h-4 w-4 text-blue-600" />
                 Claim Timeline
               </h3>
               
-              <div className="space-y-3">
-                <div className="flex items-center gap-3 text-sm">
-                  <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
-                    <CheckCircle className="h-4 w-4 text-green-600" />
+              <div className="space-y-2">
+                <div className="flex items-center gap-2 text-xs">
+                  <div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center">
+                    <CheckCircle className="h-3 w-3 text-green-600" />
                   </div>
                   <div className="flex-1">
                     <div className="font-medium text-gray-900">Claim Submitted</div>
@@ -1813,9 +1813,9 @@ const renderDamageAnnotationResults = () => {
                 </div>
                 
                 {claim.last_status_update && claim.last_status_update !== claim.created_at && (
-                  <div className="flex items-center gap-3 text-sm">
-                    <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
-                      <RefreshCw className="h-4 w-4 text-blue-600" />
+                  <div className="flex items-center gap-2 text-xs">
+                    <div className="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center">
+                      <RefreshCw className="h-3 w-3 text-blue-600" />
                     </div>
                     <div className="flex-1">
                       <div className="font-medium text-gray-900">Status Updated</div>
@@ -1825,9 +1825,9 @@ const renderDamageAnnotationResults = () => {
                 )}
                 
                 {damageAnalysisResult && (
-                  <div className="flex items-center gap-3 text-sm">
-                    <div className="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center">
-                      <Brain className="h-4 w-4 text-purple-600" />
+                  <div className="flex items-center gap-2 text-xs">
+                    <div className="w-6 h-6 bg-purple-100 rounded-full flex items-center justify-center">
+                      <Brain className="h-3 w-3 text-purple-600" />
                     </div>
                     <div className="flex-1">
                       <div className="font-medium text-gray-900">AI Analysis Completed</div>
@@ -1836,9 +1836,9 @@ const renderDamageAnnotationResults = () => {
                   </div>
                 )}
                 
-                <div className="flex items-center gap-3 text-sm">
-                  <div className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center">
-                    <Database className="h-4 w-4 text-gray-600" />
+                <div className="flex items-center gap-2 text-xs">
+                  <div className="w-6 h-6 bg-gray-100 rounded-full flex items-center justify-center">
+                    <Database className="h-3 w-3 text-gray-600" />
                   </div>
                   <div className="flex-1">
                     <div className="font-medium text-gray-900">Last Updated</div>
@@ -1854,13 +1854,13 @@ const renderDamageAnnotationResults = () => {
       {/* Image Viewer Modal */}
       {showImageViewer && claim.images.length > 0 && (
         <div className="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-50">
-          <div className="relative max-w-4xl max-h-full p-4 w-full">
+          <div className="relative max-w-4xl max-h-full p-3 w-full">
             {/* Close Button */}
             <button
               onClick={() => setShowImageViewer(false)}
-              className="absolute top-4 right-4 text-white hover:text-gray-300 z-10 bg-black bg-opacity-50 rounded-full p-2"
+              className="absolute top-3 right-3 text-white hover:text-gray-300 z-10 bg-black bg-opacity-50 rounded-full p-1.5"
             >
-              <X className="h-6 w-6" />
+              <X className="h-5 w-5" />
             </button>
             
             {/* Main Image */}
@@ -1883,34 +1883,34 @@ const renderDamageAnnotationResults = () => {
                   onClick={() => setCurrentImageIndex(prev => 
                     prev > 0 ? prev - 1 : claim.images.length - 1
                   )}
-                  className="absolute left-4 top-1/2 transform -translate-y-1/2 text-white hover:text-gray-300 bg-black bg-opacity-50 rounded-full p-3"
+                  className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white hover:text-gray-300 bg-black bg-opacity-50 rounded-full p-2"
                 >
-                  <ChevronLeft className="h-6 w-6" />
+                  <ChevronLeft className="h-5 w-5" />
                 </button>
                 <button
                   onClick={() => setCurrentImageIndex(prev => 
                     prev < claim.images.length - 1 ? prev + 1 : 0
                   )}
-                  className="absolute right-4 top-1/2 transform -translate-y-1/2 text-white hover:text-gray-300 bg-black bg-opacity-50 rounded-full p-3"
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white hover:text-gray-300 bg-black bg-opacity-50 rounded-full p-2"
                 >
-                  <ChevronRight className="h-6 w-6" />
+                  <ChevronRight className="h-5 w-5" />
                 </button>
               </>
             )}
             
             {/* Image Info Overlay */}
-            <div className="absolute bottom-4 left-4 right-4 bg-black bg-opacity-70 rounded-lg p-4 text-white">
+            <div className="absolute bottom-3 left-3 right-3 bg-black bg-opacity-70 rounded-lg p-3 text-white">
               <div className="flex items-center justify-between">
                 <div>
-                  <h3 className="font-semibold text-lg capitalize">
+                  <h3 className="font-semibold text-base capitalize">
                     {claim.images[currentImageIndex].car_angle 
                       ? `${claim.images[currentImageIndex].car_angle} Angle View`
                       : `${claim.images[currentImageIndex].image_type} View`}
                   </h3>
-                  <p className="text-sm opacity-75">
+                  <p className="text-xs opacity-75">
                     {claim.images[currentImageIndex].original_filename}
                   </p>
-                  <div className="flex items-center gap-4 mt-2 text-sm opacity-75">
+                  <div className="flex items-center gap-3 mt-1 text-xs opacity-75">
                     <span>{formatFileSize(claim.images[currentImageIndex].file_size)}</span>
                     <span>{claim.images[currentImageIndex].mime_type}</span>
                     <span>Uploaded {formatDate(claim.images[currentImageIndex].created_at || claim.created_at)}</span>
@@ -1919,15 +1919,15 @@ const renderDamageAnnotationResults = () => {
                 
                 {claim.images.length > 1 && (
                   <div className="text-right">
-                    <div className="text-sm opacity-75">
+                    <div className="text-xs opacity-75">
                       {currentImageIndex + 1} of {claim.images.length}
                     </div>
-                    <div className="flex gap-1 mt-2">
+                    <div className="flex gap-1 mt-1">
                       {claim.images.map((_, index) => (
                         <button
                           key={index}
                           onClick={() => setCurrentImageIndex(index)}
-                          className={`w-2 h-2 rounded-full transition-colors ${
+                          className={`w-1.5 h-1.5 rounded-full transition-colors ${
                             index === currentImageIndex ? 'bg-white' : 'bg-white bg-opacity-50'
                           }`}
                         />
@@ -1943,14 +1943,14 @@ const renderDamageAnnotationResults = () => {
 
       {/* Error Toast */}
       {error && (
-        <div className="fixed bottom-4 right-4 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 flex items-center gap-2">
-          <AlertTriangle className="h-5 w-5" />
+        <div className="fixed bottom-3 right-3 bg-red-500 text-white px-4 py-2 rounded-lg shadow-lg z-50 flex items-center gap-1 text-sm">
+          <AlertTriangle className="h-4 w-4" />
           <span>{error}</span>
           <button
             onClick={() => setError(null)}
-            className="ml-2 text-white hover:text-gray-200"
+            className="ml-1 text-white hover:text-gray-200"
           >
-            <X className="h-4 w-4" />
+            <X className="h-3 w-3" />
           </button>
         </div>
       )}

@@ -135,10 +135,10 @@ const InsuranceManagement: React.FC = () => {
 
   const getInsuranceIcon = (type: string) => {
     switch (type) {
-      case 'motor': return <Car className="h-4 w-4" />;
-      case 'life': return <Heart className="h-4 w-4" />;
-      case 'health': return <HealthIcon className="h-4 w-4" />;
-      default: return <Shield className="h-4 w-4" />;
+      case 'motor': return <Car className="h-3 w-3" />;
+      case 'life': return <Heart className="h-3 w-3" />;
+      case 'health': return <HealthIcon className="h-3 w-3" />;
+      default: return <Shield className="h-3 w-3" />;
     }
   };
 
@@ -153,10 +153,10 @@ const InsuranceManagement: React.FC = () => {
 
   const getStatusIcon = (status: string) => {
     switch (status) {
-      case 'approved': return <CheckCircle className="h-4 w-4" />;
-      case 'rejected': return <XCircle className="h-4 w-4" />;
-      case 'under_review': return <Clock className="h-4 w-4" />;
-      default: return <Clock className="h-4 w-4" />;
+      case 'approved': return <CheckCircle className="h-3 w-3" />;
+      case 'rejected': return <XCircle className="h-3 w-3" />;
+      case 'under_review': return <Clock className="h-3 w-3" />;
+      default: return <Clock className="h-3 w-3" />;
     }
   };
 
@@ -175,68 +175,68 @@ const InsuranceManagement: React.FC = () => {
   });
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="p-4 space-y-4">
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-600">Total Applications</p>
-              <p className="text-2xl font-semibold text-gray-900">{insuranceApplications.length}</p>
-              <p className="text-sm text-green-600 flex items-center gap-1">
+              <p className="text-xs text-gray-600">Total Applications</p>
+              <p className="text-lg font-semibold text-gray-900">{insuranceApplications.length}</p>
+              <p className="text-xs text-green-600 flex items-center gap-1">
                 <TrendingUp className="h-3 w-3" />
                 +15% this month
               </p>
             </div>
-            <Shield className="h-8 w-8 text-blue-500" />
+            <Shield className="h-6 w-6 text-blue-500" />
           </div>
         </div>
         
-        <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+        <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-600">Pending Review</p>
-              <p className="text-2xl font-semibold text-gray-900">
+              <p className="text-xs text-gray-600">Pending Review</p>
+              <p className="text-lg font-semibold text-gray-900">
                 {insuranceApplications.filter(app => app.status === 'pending' || app.status === 'under_review').length}
               </p>
-              <p className="text-sm text-orange-600 flex items-center gap-1">
+              <p className="text-xs text-orange-600 flex items-center gap-1">
                 <Clock className="h-3 w-3" />
                 Needs attention
               </p>
             </div>
-            <Eye className="h-8 w-8 text-orange-500" />
+            <Eye className="h-6 w-6 text-orange-500" />
           </div>
         </div>
 
-        <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+        <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-600">Approved Today</p>
-              <p className="text-2xl font-semibold text-gray-900">
+              <p className="text-xs text-gray-600">Approved Today</p>
+              <p className="text-lg font-semibold text-gray-900">
                 {insuranceApplications.filter(app => app.status === 'approved').length}
               </p>
-              <p className="text-sm text-green-600 flex items-center gap-1">
+              <p className="text-xs text-green-600 flex items-center gap-1">
                 <CheckCircle className="h-3 w-3" />
                 High approval rate
               </p>
             </div>
-            <CheckCircle className="h-8 w-8 text-green-500" />
+            <CheckCircle className="h-6 w-6 text-green-500" />
           </div>
         </div>
 
-        <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+        <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-600">Total Premium</p>
-              <p className="text-2xl font-semibold text-gray-900">
+              <p className="text-xs text-gray-600">Total Premium</p>
+              <p className="text-lg font-semibold text-gray-900">
                 ${insuranceApplications.filter(app => app.status === 'approved').reduce((sum, app) => sum + app.premium, 0).toLocaleString()}
               </p>
-              <p className="text-sm text-blue-600 flex items-center gap-1">
+              <p className="text-xs text-blue-600 flex items-center gap-1">
                 <DollarSign className="h-3 w-3" />
                 Revenue generated
               </p>
             </div>
-            <DollarSign className="h-8 w-8 text-purple-500" />
+            <DollarSign className="h-6 w-6 text-purple-500" />
           </div>
         </div>
       </div>
@@ -244,7 +244,7 @@ const InsuranceManagement: React.FC = () => {
       {/* Insurance Type Tabs */}
       <div className="bg-white rounded-lg shadow-sm border border-gray-200">
         <div className="border-b border-gray-200">
-          <nav className="flex space-x-8 px-6">
+          <nav className="flex space-x-6 px-4">
             {[
               { id: 'all', label: 'All Applications', icon: Shield },
               { id: 'motor', label: 'Motor Insurance', icon: Car },
@@ -254,15 +254,15 @@ const InsuranceManagement: React.FC = () => {
               <button
                 key={tab.id}
                 onClick={() => setInsuranceTab(tab.id)}
-                className={`py-4 px-1 border-b-2 font-medium text-sm flex items-center gap-2 ${
+                className={`py-3 px-1 border-b-2 font-medium text-sm flex items-center gap-2 ${
                   insuranceTab === tab.id
                     ? 'border-emerald-500 text-emerald-600'
                     : 'border-transparent text-gray-500 hover:text-gray-700'
                 }`}
               >
-                <tab.icon size={16} />
+                <tab.icon size={14} />
                 {tab.label}
-                <span className="ml-2 px-2 py-1 text-xs bg-gray-100 text-gray-600 rounded-full">
+                <span className="ml-1 px-2 py-0.5 text-xs bg-gray-100 text-gray-600 rounded-full">
                   {tab.id === 'all' ? insuranceApplications.length : insuranceApplications.filter(app => app.type === tab.id).length}
                 </span>
               </button>
@@ -271,14 +271,14 @@ const InsuranceManagement: React.FC = () => {
         </div>
 
         {/* Table Controls */}
-        <div className="p-6">
-          <div className="flex items-center justify-between mb-6">
-            <div className="flex items-center gap-3">
-              <button className="border border-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-50 transition-colors flex items-center gap-2">
-                <Filter size={16} />
+        <div className="p-4">
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-2">
+              <button className="border border-gray-300 text-gray-700 px-3 py-1.5 rounded-lg hover:bg-gray-50 transition-colors flex items-center gap-1.5 text-sm">
+                <Filter size={14} />
                 Filter
               </button>
-              <select className="border border-gray-300 rounded-lg px-3 py-2 text-sm">
+              <select className="border border-gray-300 rounded-lg px-2 py-1.5 text-xs">
                 <option>All Status</option>
                 <option>Pending</option>
                 <option>Approved</option>
@@ -287,9 +287,9 @@ const InsuranceManagement: React.FC = () => {
               </select>
             </div>
             
-            <div className="flex items-center gap-2 text-sm text-gray-600">
+            <div className="flex items-center gap-2 text-xs text-gray-600">
               <span>Show</span>
-              <select className="border border-gray-300 rounded px-2 py-1">
+              <select className="border border-gray-300 rounded px-2 py-1 text-xs">
                 <option>10</option>
                 <option>25</option>
                 <option>50</option>
@@ -303,52 +303,52 @@ const InsuranceManagement: React.FC = () => {
             <table className="w-full">
               <thead className="bg-gray-50 border-b border-gray-200">
                 <tr>
-                  <th className="text-left px-6 py-3 text-sm font-medium text-gray-600">Application ID</th>
-                  <th className="text-left px-6 py-3 text-sm font-medium text-gray-600">Applicant</th>
-                  <th className="text-left px-6 py-3 text-sm font-medium text-gray-600">Type</th>
-                  <th className="text-left px-6 py-3 text-sm font-medium text-gray-600">Premium</th>
-                  <th className="text-left px-6 py-3 text-sm font-medium text-gray-600">Coverage</th>
-                  <th className="text-left px-6 py-3 text-sm font-medium text-gray-600">Status</th>
-                  <th className="text-left px-6 py-3 text-sm font-medium text-gray-600">Submitted</th>
-                  <th className="text-left px-6 py-3 text-sm font-medium text-gray-600">Actions</th>
+                  <th className="text-left px-3 py-2 text-xs font-medium text-gray-600">Application ID</th>
+                  <th className="text-left px-3 py-2 text-xs font-medium text-gray-600">Applicant</th>
+                  <th className="text-left px-3 py-2 text-xs font-medium text-gray-600">Type</th>
+                  <th className="text-left px-3 py-2 text-xs font-medium text-gray-600">Premium</th>
+                  <th className="text-left px-3 py-2 text-xs font-medium text-gray-600">Coverage</th>
+                  <th className="text-left px-3 py-2 text-xs font-medium text-gray-600">Status</th>
+                  <th className="text-left px-3 py-2 text-xs font-medium text-gray-600">Submitted</th>
+                  <th className="text-left px-3 py-2 text-xs font-medium text-gray-600">Actions</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200">
                 {filteredApplications.map((application) => (
                   <tr key={application.id} className="hover:bg-gray-50 transition-colors">
-                    <td className="px-6 py-4">
-                      <span className="font-medium text-gray-900">{application.id}</span>
+                    <td className="px-3 py-2">
+                      <span className="font-medium text-gray-900 text-sm">{application.id}</span>
                     </td>
-                    <td className="px-6 py-4">
-                      <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-full flex items-center justify-center">
-                          <span className="text-white font-medium text-sm">{application.applicantName[0]}</span>
+                    <td className="px-3 py-2">
+                      <div className="flex items-center gap-2">
+                        <div className="w-6 h-6 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-full flex items-center justify-center">
+                          <span className="text-white font-medium text-xs">{application.applicantName[0]}</span>
                         </div>
                         <div>
-                          <div className="font-medium text-gray-900">{application.applicantName}</div>
-                          <div className="text-sm text-gray-500">{application.email}</div>
+                          <div className="font-medium text-gray-900 text-sm">{application.applicantName}</div>
+                          <div className="text-xs text-gray-500">{application.email}</div>
                         </div>
                       </div>
                     </td>
-                    <td className="px-6 py-4">
-                      <span className={`px-2 py-1 rounded-full text-xs font-medium flex items-center gap-1 w-fit ${getInsuranceTypeColor(application.type)}`}>
+                    <td className="px-3 py-2">
+                      <span className={`px-2 py-0.5 rounded-full text-xs font-medium flex items-center gap-1 w-fit ${getInsuranceTypeColor(application.type)}`}>
                         {getInsuranceIcon(application.type)}
                         <span className="capitalize">{application.type}</span>
                       </span>
                     </td>
-                    <td className="px-6 py-4 text-gray-600 font-medium">${application.premium.toLocaleString()}</td>
-                    <td className="px-6 py-4 text-gray-600">${application.coverage.toLocaleString()}</td>
-                    <td className="px-6 py-4">
-                      <span className={`px-2 py-1 rounded-full text-xs font-medium flex items-center gap-1 w-fit ${getStatusColor(application.status)}`}>
+                    <td className="px-3 py-2 text-gray-600 font-medium text-sm">${application.premium.toLocaleString()}</td>
+                    <td className="px-3 py-2 text-gray-600 text-sm">${application.coverage.toLocaleString()}</td>
+                    <td className="px-3 py-2">
+                      <span className={`px-2 py-0.5 rounded-full text-xs font-medium flex items-center gap-1 w-fit ${getStatusColor(application.status)}`}>
                         {getStatusIcon(application.status)}
                         <span className="capitalize">{application.status.replace('_', ' ')}</span>
                       </span>
                     </td>
-                    <td className="px-6 py-4 text-gray-600 text-sm">
+                    <td className="px-3 py-2 text-gray-600 text-xs">
                       {new Date(application.submittedAt).toLocaleDateString()}
                     </td>
-                    <td className="px-6 py-4">
-                      <div className="flex items-center gap-2">
+                    <td className="px-3 py-2">
+                      <div className="flex items-center gap-1">
                         <button 
                           onClick={() => {
                             setSelectedApplication(application);
@@ -357,13 +357,13 @@ const InsuranceManagement: React.FC = () => {
                           className="p-1 hover:bg-gray-100 rounded" 
                           title="View Details"
                         >
-                          <Eye size={16} className="text-gray-600" />
+                          <Eye size={14} className="text-gray-600" />
                         </button>
                         <button className="p-1 hover:bg-gray-100 rounded" title="Edit">
-                          <Edit size={16} className="text-gray-600" />
+                          <Edit size={14} className="text-gray-600" />
                         </button>
                         <button className="p-1 hover:bg-gray-100 rounded" title="More">
-                          <MoreHorizontal size={16} className="text-gray-600" />
+                          <MoreHorizontal size={14} className="text-gray-600" />
                         </button>
                       </div>
                     </td>
@@ -374,18 +374,18 @@ const InsuranceManagement: React.FC = () => {
           </div>
 
           {/* Pagination */}
-          <div className="flex items-center justify-between mt-6">
-            <div className="text-sm text-gray-500">
+          <div className="flex items-center justify-between mt-4">
+            <div className="text-xs text-gray-500">
               Showing 1 to {filteredApplications.length} of {filteredApplications.length} results
             </div>
             <div className="flex items-center gap-2">
-              <button className="px-3 py-1 border border-gray-300 rounded text-sm hover:bg-gray-50 disabled:opacity-50" disabled>
+              <button className="px-2 py-1 border border-gray-300 rounded text-xs hover:bg-gray-50 disabled:opacity-50" disabled>
                 Previous
               </button>
-              <button className="px-3 py-1 bg-emerald-500 text-white rounded text-sm">
+              <button className="px-2 py-1 bg-emerald-500 text-white rounded text-xs">
                 1
               </button>
-              <button className="px-3 py-1 border border-gray-300 rounded text-sm hover:bg-gray-50" disabled>
+              <button className="px-2 py-1 border border-gray-300 rounded text-xs hover:bg-gray-50" disabled>
                 Next
               </button>
             </div>
